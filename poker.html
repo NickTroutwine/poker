@@ -1,0 +1,201 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">$(document).ready(function() {
+var deck={
+  0: 4,
+  1: 4,
+  2: 4,
+  3: 4,
+  4: 4,
+  5: 4,
+  6: 4,
+  7: 4,
+  8: 4,
+  9: 4,
+  10: 4,
+  11: 4,
+  12: 4
+};
+
+var player1 = [];
+
+var player2 = [];
+
+//picking random suit for drawn
+for (i = 0; i < 10; i++) {
+    var keys = Object.keys(deck);
+    var card = keys[Math.floor(Math.random()*keys.length)];
+    deck[card]--;
+    var keyt = deck[card];
+    if (keyt == 0) {
+      delete deck[card]  
+    }
+  $("#card"+i).text(card);
+  $("#card"+i).addClass("C"+i)
+
+  
+ //dealing hands to players 
+  if ((i % 2) == 0) {
+    player1.push(card);
+  } else {
+    player2.push(card);
+  }
+};
+
+
+//sort player hands in order of points
+player1.sort(function(a, b) {
+  return a - b
+});
+player2.sort(function(a, b) {
+  return a - b
+}); 
+
+//check for 2 of a kind
+var player1dup = findDup(player1);
+console.log("p1");
+console.log(player1dup);
+var player2dup = findDup(player2);                    
+console.log("p2");
+console.log(player2dup);
+
+//find duplicate funtcion
+function findDup(dupe) {
+  var result = [];
+  dupe.forEach(function(element, index) {
+    if (dupe.indexOf(element, index + 1) > -1) {
+      result.push(element);
+    }
+  });
+  return result;
+};
+
+//check for 3 of a kind
+var check1dup = findDup(player1dup);
+console.log("p1check");
+console.log(check1dup);
+var check2dup = findDup(player2dup);
+console.log("p2check");
+console.log(check2dup);
+
+//check for 4 of a kind
+var xcheck1dup = findDup(check1dup);
+console.log("4sp1check");
+console.log(xcheck1dup);
+var xcheck2dup = findDup(check2dup);
+console.log("4sp2check");
+console.log(xcheck2dup);
+
+//comparing 4 of a kind values
+function compCheck(dupe1, dupe2) {
+if ((dupe1.length == true) || (dupe2.length == true)) {
+  if (dupe1.length > dupe2.length) {
+    console.log("p1 wins");
+  } else if (dupe1.length < dupe2.length) {
+    console.log("p2 wins");
+  } else {
+    var dupint1 = parseInt(dupe1[0]);
+    var dupint2 = parseInt(dupe2[0]);
+    if (dupint1 > dupint2) {
+      console.log("p1 wins tie");
+    } else {
+      console.log("p2 wins tie");
+    }
+  }
+}
+}
+
+compCheck(xcheck1dup, xcheck2dup);
+
+console.log("player 1");
+    console.log(player1);
+console.log("player 2");
+    console.log(player2);
+
+});
+</script>
+</head>
+
+<div class="master">
+  <div class="head">
+    <h1>Poker Game</h1>
+  </div>
+  <div class="game">
+    <h3>Player 1 Hand</h3>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div id="card0" class="cardVal"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div id="card2" class="cardVal"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div id="card4" class="cardVal"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div id="card6" class="cardVal"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div id="card8" class="cardVal"></div>
+        </div>
+      </div>
+    </div>
+    <h3>Player 2 Hand</h3>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div id="card1" class="cardVal"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div id="card3" class="cardVal"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div id="card5" class="cardVal"></div>
+        </div>
+      </div>         
+      <div class="col">
+        <div class="card">
+          <div id="card7" class="cardVal"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div id="card9" class="cardVal"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</html>
+
+
+
+<style type="text/css">
+.col {
+  display: inline-block;
+  width: 18%;
+}
+
+#card0 {
+  color: red
+}
+
+.C0 {
+  background-image: url("https://openclipart.org/download/216413/coniglio_rabbit_small.svg");
+  height: 60px
+}
+</style>
